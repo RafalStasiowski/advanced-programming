@@ -1,0 +1,2 @@
+def invert():
+    return None
