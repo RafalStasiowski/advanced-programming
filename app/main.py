@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-import prime.prime as prime
-import inverting_picture.inverting_picture as inverting_picture
-import time_encode.time_encode as time
+
+from app.inverting_picture import inverting_picture
+from app.prime.prime import check_prime
+from app.time_encode import time_encode
 
 app = FastAPI()
 
@@ -13,7 +14,7 @@ async def root():
 
 @app.get("/v1/prime/{number}")
 async def prime_checker(number: int):
-    return {"result": prime.check_prime(number)}
+    return {"result": check_prime(number)}
 
 
 @app.get("/v1/picture/invert")
@@ -23,4 +24,4 @@ async def invert_picture():
 
 @app.get("/v1/time")
 async def get_time():
-    return time.get_time()
+    return time_encode.get_time()
