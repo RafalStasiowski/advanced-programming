@@ -1,5 +1,3 @@
-import cv2
-
 
 def invert():
     return {}
