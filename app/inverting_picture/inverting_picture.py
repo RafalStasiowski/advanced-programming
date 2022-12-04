@@ -1,7 +1,11 @@
+import base64
 
-def invert():
-    return {}
-    # image = cv2.imread("img.jpg")
-    # image = ~image
-    # cv2.imwrite("img_inv.jpg", image)
-    # return image
+import cv2
+import numpy as np
+from fastapi import File
+
+
+def invert(file: File):
+    image = cv2.imread(file.filename)
+    image = ~image
+    return image

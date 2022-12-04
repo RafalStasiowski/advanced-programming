@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 
 from app.inverting_picture import inverting_picture
 from app.prime.prime import check_prime
@@ -17,9 +17,18 @@ async def prime_checker(number: int):
     return {"result": check_prime(number)}
 
 
-@app.get("/v1/picture/invert")
-async def invert_picture():
-    return inverting_picture.invert()
+@app.post("/v1/picture/invert")
+async def invert_picture(file: UploadFile = File(...)):
+    try:
+        contents = file.file.read()
+        with open(file.filename, 'wb') as f:
+            f.write(contents)
+    except Exception:
+        return {"message": "There was an error uploading the file"}
+    finally:
+        file.file.close()
+
+    return {"message": f"Successfully uploaded {inverting_picture.invert(file)}"}
 
 
 @app.get("/v1/time")
